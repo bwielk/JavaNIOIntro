@@ -1,5 +1,5 @@
-1	Sunny and dry desert	5	{Q=0}
-2	Abandoned city full of zombies	4	{Q=0}
-3	Magical fields of clovers	4	{Q=0}
-4	Condemned area in the Hell	2	{Q=0}
-5	Blessings in the Heaven	3	{Q=0}
+1	Sunny and dry desert	5	{Q=0}	{Q=0}	{Q=0}	{Q=0}	{Q=0, S=5, E=4, N=3, W=2}	{Q=0, S=5, E=4, N=3, W=2}
+2	Abandoned city full of zombies	4	{Q=0}	{Q=0}	{Q=0}	{Q=0}	{Q=0, S=5, E=1, N=3}	{Q=0, S=5, E=1, N=3}
+3	Magical fields of clovers	4	{Q=0}	{Q=0}	{Q=0}	{Q=0}	{Q=0, S=1, E=4, W=2}	{Q=0, S=1, E=4, W=2}
+4	Condemned area in the Hell	2	{Q=0}	{Q=0}	{Q=0}	{Q=0}	{Q=0, S=5}	{Q=0, S=5}
+5	Blessings in the Heaven	3	{Q=0}	{Q=0}	{Q=0}	{Q=0}	{Q=0, N=1, W=2}	{Q=0, N=1, W=2}

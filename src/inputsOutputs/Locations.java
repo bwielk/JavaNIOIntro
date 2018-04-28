@@ -2,6 +2,8 @@ package inputsOutputs;
 
 import java.io.*;
 import java.nio.file.*;
+import java.sql.SQLOutput;
+import java.time.LocalDate;
 import java.util.*;
 
 public class Locations implements Map<Integer, Location> {
@@ -37,10 +39,26 @@ public class Locations implements Map<Integer, Location> {
                 int loc = scanner.nextInt();
                 scanner.skip(scanner.delimiter());
                 String description = scanner.nextLine();
-                System.out.println("Imported " + loc + " desctription " + description);
                 locations.put(loc, new Location(loc, description, null));
+                System.out.println("Imported " + loc + " desctription " + description + ". Size : " + locations.size());
             }
 
+        }catch(IOException e){
+            e.printStackTrace();
+        }
+
+        try(BufferedReader dirFile = Files.newBufferedReader(dirPath)){
+            String input;
+            while((input = dirFile.readLine()) != null){
+                String[] data = input.split("\t");
+                int loc = Integer.parseInt(data[0]);
+                String direction = data[1];
+                int destination = Integer.parseInt(data[2]);
+                System.out.println(loc + ": " + direction + ": " + destination);
+                Location location = locations.get(loc);
+                location.addExit(direction, destination);
+                System.out.println("Added a new exit to location " + loc + " : added destination " + location.getExits().size());
+            }
         }catch(IOException e){
             e.printStackTrace();
         }
