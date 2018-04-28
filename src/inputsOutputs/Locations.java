@@ -9,8 +9,8 @@ public class Locations implements Map<Integer, Location> {
     private static Map<Integer, Location> locations = new LinkedHashMap<Integer, Location>();
 
     public static void main(String[] args) {
-            Path locPath = FileSystems.getDefault().getPath("locations.txt");
-            Path dirPath = FileSystems.getDefault().getPath("directions.txt");
+      Path locPath = FileSystems.getDefault().getPath("locations.txt");
+      Path dirPath = FileSystems.getDefault().getPath("directions.txt");
             try(BufferedWriter locFile = Files.newBufferedWriter(locPath);
                 BufferedWriter dirFile = Files.newBufferedWriter(dirPath)){
                 for(Location location : locations.values()){
@@ -28,25 +28,19 @@ public class Locations implements Map<Integer, Location> {
 
         //static initialisation
     static {
-        try(ObjectInputStream locFile = new ObjectInputStream(new BufferedInputStream(new FileInputStream("locations.dat")))){
-            boolean endOfFile = false;
-            while(!endOfFile){
-                try{
-                    Location location = (Location) locFile.readObject();
-                    System.out.println(location.toString());
-                    locations.put(location.getLocationID(), location);
-                } catch (EOFException e) {
-                    System.out.println("EOF Exception");
-                    endOfFile = true;
-                    e.printStackTrace();
-                }catch(ClassNotFoundException e){
-                    System.out.println("Class Not Found Exception");
-                    e.printStackTrace();
-                }catch(InvalidClassException e){
-                    System.out.println("Invalid Class Exception");
-                    e.printStackTrace();
-                }
+        Path locPath = FileSystems.getDefault().getPath("locations.txt");
+        Path dirPath = FileSystems.getDefault().getPath("directions.txt");
+
+        try(Scanner scanner = new Scanner(Files.newBufferedReader(locPath))){
+            scanner.useDelimiter("\t");
+            while(scanner.hasNextLine()){
+                int loc = scanner.nextInt();
+                scanner.skip(scanner.delimiter());
+                String description = scanner.nextLine();
+                System.out.println("Imported " + loc + " desctription " + description);
+                locations.put(loc, new Location(loc, description, null));
             }
+
         }catch(IOException e){
             e.printStackTrace();
         }
