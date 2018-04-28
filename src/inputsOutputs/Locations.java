@@ -1,18 +1,29 @@
 package inputsOutputs;
 
 import java.io.*;
+import java.nio.file.*;
 import java.util.*;
 
 public class Locations implements Map<Integer, Location> {
 
     private static Map<Integer, Location> locations = new LinkedHashMap<Integer, Location>();
 
-    public static void main(String[] args) throws IOException {
-        try (ObjectOutputStream locFile = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream("locations.dat")))) {
-            for(Location location : locations.values()){
-                locFile.writeObject(location);
+    public static void main(String[] args) {
+            Path locPath = FileSystems.getDefault().getPath("locations.txt");
+            Path dirPath = FileSystems.getDefault().getPath("directions.txt");
+            try(BufferedWriter locFile = Files.newBufferedWriter(locPath);
+                BufferedWriter dirFile = Files.newBufferedWriter(dirPath)){
+                for(Location location : locations.values()){
+                    locFile.write(location.getLocationID() + "\t" + location.getDescription() + "\t" + location.getExits() + "\n");
+                    for(String direction : location.getExits().keySet()){
+                        if(!direction.equalsIgnoreCase("Q")){
+                            dirFile.write(location.getLocationID() + "\t" + direction + "\t" + location.getExits().get(direction) + "\n");
+                        }
+                    }
+                }
+            }catch(IOException e){
+                e.printStackTrace();
             }
-        }
     }
 
         //static initialisation
